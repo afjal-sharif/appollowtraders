@@ -19,21 +19,21 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: temurin
-        java-version: '8'
+        java-version: '17'
 
-    - name: Install Android SDK
+    - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
     - name: Accept SDK licenses
       run: yes | sdkmanager --licenses
 
-    - name: Give Gradle permission
+    - name: Make gradlew executable
       run: chmod +x gradlew
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    - name: Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: Appollow-Traders-APK
