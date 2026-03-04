@@ -6,28 +6,34 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        distribution: 'temurin'
-        java-version: '17'
+        distribution: temurin
+        java-version: 17
 
-    - name: Grant permission
+    - name: Install Gradle
+      run: |
+        sudo apt update
+        sudo apt install gradle -y
+
+    - name: Generate Gradle Wrapper
+      run: gradle wrapper
+
+    - name: Give permission
       run: chmod +x gradlew
 
-    - name: Build APK
+    - name: Build Debug APK
       run: ./gradlew assembleDebug
 
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
-        name: Appollow-Traders-APK
+        name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
